@@ -31,4 +31,5 @@ const dbRun = async (query, values = []) => {
     });
   });
 };
-export default db;
+
+export { db, initializeDB, dbQuerry, dbRun };

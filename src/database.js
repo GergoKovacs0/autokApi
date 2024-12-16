@@ -26,7 +26,7 @@ const dbRun = async (query, values = []) => {
       if (err) {
         reject(err);
       } else {
-        resolve(this);
+        resolve(this.changes);
       }
     });
   });

@@ -62,7 +62,7 @@ export const updateCar = async (req, res, next) => {
   }
 
   const { brand, model, color, year } = req.body;
-  if (!brand && !model && !color && !year) {
+  if (!brand || !model || !color || !year) {
     return res.status(400).json({ message: "At least one field is required" });
   }
 
@@ -79,7 +79,7 @@ export const updateCar = async (req, res, next) => {
   try {
     const result = await dbRun(query, [brand, model, color, year, id]);
     if (result.changes === 0) {
-      return res.status(404).json({ message: "Car not found!" });
+      return res.status(404).json({ message: "Car not found" });
     }
     return res.status(200).json({ message: "Car updated" });
   } catch (error) {

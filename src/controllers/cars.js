@@ -77,7 +77,10 @@ export const updateCar = async (req, res, next) => {
   const query =
     "UPDATE cars SET brand = ?, model = ?, color = ?, year = ? WHERE id = ?";
   try {
-    await dbRun(query, [brand, model, color, year, id]);
+    const result = await dbRun(query, [brand, model, color, year, id]);
+    if (result.changes === 0) {
+      return res.status(404).json({ message: "Car not found!" });
+    }
     return res.status(200).json({ message: "Car updated" });
   } catch (error) {
     next(error);
@@ -95,7 +98,10 @@ export const deleteCar = async (req, res, next) => {
 
   const query = "DELETE FROM cars WHERE id = ?";
   try {
-    await dbRun(query, [id]);
+    const result = await dbRun(query, [id]);
+    if (result.changes === 0) {
+      return res.status(404).json({ message: "Car not found!" });
+    }
     return res.status(200).json({ message: "Car deleted" });
   } catch (error) {
     next(error);
